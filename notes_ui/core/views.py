@@ -1,5 +1,6 @@
 import requests
 from django.shortcuts import render, redirect
+from django.urls import reverse
 
 API_BASE = "http://127.0.0.1:8000"  # FastAPI backend
 
@@ -111,30 +112,35 @@ def delete_note(request, note_id):
     requests.delete(f"{API_BASE}/notes/{note_id}", headers=headers)
     return redirect("notes_list")
 
-# views.py
 
 def share_note(request, note_id):
     token = request.session.get("token")
     headers = {"Authorization": f"Bearer {token}"} if token else {}
 
-    # Fetch the note to get share_id
+    # Owner must be logged in to generate share_id
     res = requests.get(f"{API_BASE}/notes/{note_id}", headers=headers)
     if res.status_code != 200:
         return redirect("notes_list")
 
     note = res.json()
     if not note.get("shared") or not note.get("share_id"):
-        # force share first if not already shared
         return redirect("edit_note", note_id=note_id)
 
-    # Instead of redirecting to FastAPI, fetch the shared note content
-    shared_res = requests.get(f"{API_BASE}/notes/shared/{note['share_id']}")
-    if shared_res.status_code != 200:
-        return redirect("notes_list")
+    # Build a public link (no login required)
+    public_link = request.build_absolute_uri(
+        reverse("view_shared_note", args=[note["share_id"]])
+    )
 
-    shared_note = shared_res.json()
+    return render(request, "share_link.html", {"note": note, "public_link": public_link})
 
-    # Render in template
-    return render(request, "shared_note.html", {"note": shared_note})
+
+def view_shared_note(request, share_id):
+    # Fetch from FastAPI public endpoint (no auth!)
+    res = requests.get(f"{API_BASE}/notes/shared/{share_id}")
+    if res.status_code != 200:
+        return render(request, "shared_note.html", {"note": None, "error": "Note not found"})
+
+    note = res.json()
+    return render(request, "shared_note.html", {"note": note})
 
 
