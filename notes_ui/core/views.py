@@ -2,9 +2,8 @@ import requests
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-API_BASE = "http://127.0.0.1:8000"  # FastAPI backend
+API_BASE = "http://127.0.0.1:8000"
 
-# ----------------- Auth Views -----------------
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -12,7 +11,7 @@ def login_view(request):
 
         res = requests.post(
             f"{API_BASE}/users/login",
-            data={"username": username, "password": password},  # OAuth2 expects form-data
+            data={"username": username, "password": password},
         )
 
         if res.status_code == 200:
@@ -43,18 +42,15 @@ def register_view(request):
 
     return render(request, "register.html", {"error": error})
 
-
-# ----------------- Notes Views -----------------
 def notes_list(request):
     token = request.session.get("token")
     if not token:
-        return redirect("login")  # No token, force login
+        return redirect("login")
 
     headers = {"Authorization": f"Bearer {token}"}
     res = requests.get(f"{API_BASE}/notes/", headers=headers)
 
     if res.status_code == 401:
-        # Token expired or invalid -> clear session and force re-login
         request.session.flush()
         return redirect("login")
 
@@ -88,7 +84,7 @@ def edit_note(request, note_id):
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
-        shared = "shared" in request.POST  # checkbox → bool
+        shared = "shared" in request.POST
 
         requests.put(
             f"{API_BASE}/notes/{note_id}",
@@ -97,8 +93,6 @@ def edit_note(request, note_id):
         )
         return redirect("notes_list")
 
-
-    # Pre-fill the form with existing data
     res = requests.get(f"{API_BASE}/notes/{note_id}", headers=headers)
     note = res.json() if res.status_code == 200 else {}
 
@@ -117,7 +111,6 @@ def share_note(request, note_id):
     token = request.session.get("token")
     headers = {"Authorization": f"Bearer {token}"} if token else {}
 
-    # Owner must be logged in to generate share_id
     res = requests.get(f"{API_BASE}/notes/{note_id}", headers=headers)
     if res.status_code != 200:
         return redirect("notes_list")
@@ -126,7 +119,6 @@ def share_note(request, note_id):
     if not note.get("shared") or not note.get("share_id"):
         return redirect("edit_note", note_id=note_id)
 
-    # Build a public link (no login required)
     public_link = request.build_absolute_uri(
         reverse("view_shared_note", args=[note["share_id"]])
     )
@@ -135,7 +127,6 @@ def share_note(request, note_id):
 
 
 def view_shared_note(request, share_id):
-    # Fetch from FastAPI public endpoint (no auth!)
     res = requests.get(f"{API_BASE}/notes/shared/{share_id}")
     if res.status_code != 200:
         return render(request, "shared_note.html", {"note": None, "error": "Note not found"})
