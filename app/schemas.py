@@ -1,7 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 
-# User schemas
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
@@ -19,11 +18,23 @@ class NoteBase(BaseModel):
     content: str
 
 class NoteCreate(NoteBase):
-    pass
+    title: str
+    content: str
+
+class NoteUpdate(BaseModel):
+    title: str
+    content: str
+    shared: Optional[bool] = False
 
 class NoteOut(NoteBase):
     id: int
     owner_id: int
+    shared: bool
+    share_id: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+        
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

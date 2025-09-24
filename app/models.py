@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean,Text
 from sqlalchemy.orm import relationship
 from app.database import Base
+import uuid
 
 class User(Base):
     __tablename__ = "users"
@@ -11,13 +12,14 @@ class User(Base):
 
     notes = relationship("Note", back_populates="owner")
 
-
 class Note(Base):
     __tablename__ = "notes"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
-    content = Column(Text)
+    content = Column(String)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    shared = Column(Boolean, default=False)
+    share_id = Column(String, unique=True, index=True, default=lambda: str(uuid.uuid4()))
 
     owner = relationship("User", back_populates="notes")

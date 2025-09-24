@@ -27,3 +27,19 @@ def create_note(db: Session, note: schemas.NoteCreate, user_id: int):
 
 def get_notes(db: Session, user_id: int):
     return db.query(models.Note).filter(models.Note.owner_id == user_id).all()
+
+
+# app/crud.py
+def update_note(db: Session, note_id: int, note_data: schemas.NoteUpdate, user_id: int):
+    note = db.query(models.Note).filter(models.Note.id == note_id, models.Note.owner_id == user_id).first()
+    if not note:
+        return None
+    note.title = note_data.title
+    note.content = note_data.content
+    note.shared = note_data.shared
+    db.commit()
+    db.refresh(note)
+    return note
+
+def get_note_by_share_id(db: Session, share_id: str):
+    return db.query(models.Note).filter(models.Note.share_id == share_id, models.Note.shared == True).first()

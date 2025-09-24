@@ -14,6 +14,9 @@
             {% for note in notes %}
                 <li>
                     <strong>{{ note.title }}</strong> - {{ note.content }}
+                    <br>
+                    <a href="{% url 'edit_note' note.id %}">✏️ Edit</a> |
+                    <a href="{% url 'share_note' note.id %}">🔗 Share</a>
                 </li>
             {% endfor %}
         </ul>
