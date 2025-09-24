@@ -1,8 +1,7 @@
 from fastapi import FastAPI
-from note_app_routers import users, notes
-import models, database
+from app.note_app_routers import users, notes
+from app import models, database
 
-# Create DB tables
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Notes App API")
