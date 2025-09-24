@@ -44,7 +44,7 @@ uvicorn app.main:app --reload
 
 ### Runs on http://127.0.0.1:8000
 
-### Visit Swagger docs: 👉 
+### Visit Swagger docs👇
 ```bash
 http://127.0.0.1:8000/docs/
 ```
@@ -64,7 +64,7 @@ python manage.py runserver 8001
 
 ### Runs on 👉 http://127.0.0.1:8001
 
-Visit login page:
+Visit login page👇:
 
 ```bash
 http://127.0.0.1:8001/login/
