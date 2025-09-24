@@ -51,30 +51,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'notes_ui.wsgi.application'
 
-USE_POSTGRES = os.getenv("USE_POSTGRES", "True").lower() == "true"
 
-if USE_POSTGRES:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("DJANGO_DB_NAME"),
-            "USER": os.getenv("DJANGO_DB_USER"),
-            "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
-            "HOST": os.getenv("DJANGO_DB_HOST", "localhost"),
-            "PORT": os.getenv("DJANGO_DB_PORT_POSTGRESQL", "5432"),
-        }
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DJANGO_DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT_POSTGRESQL", "5432"),
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": os.getenv("DJANGO_DB_NAME"),
-            "USER": os.getenv("DJANGO_DB_USER"),
-            "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
-            "HOST": os.getenv("DJANGO_DB_HOST", "localhost"),
-            "PORT": os.getenv("DJANGO_DB_PORT_MYSQL", "3306"),
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
