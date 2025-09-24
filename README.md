@@ -69,4 +69,4 @@ Visit login page:
 ```bash
 http://127.0.0.1:8001/login/
 ```
-### 👉 Important: Always run Django and FastAPI in separate terminals at the same time.
+### 👉 Important: Always run Django and FastAPI in separate terminals at the same time on diffrent ports.
