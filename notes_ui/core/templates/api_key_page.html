@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My API Key</title>
+</head>
+<body>
+    <h1>Generate API Key</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Generate New API Key</button>
+    </form>
+
+    {% if api_key %}
+        <p><strong>Your API Key:</strong></p>
+        <input type="text" value="{{ api_key }}" id="apiKey" readonly>
+        <button onclick="copyKey()">Copy</button>
+    {% endif %}
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <script>
+    function copyKey() {
+        var copyText = document.getElementById("apiKey");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+    }
+    </script>
+</body>
+</html>

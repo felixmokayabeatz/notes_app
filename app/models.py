@@ -21,3 +21,16 @@ class Note(Base):
     shared = Column(Boolean, default=False)
     share_id = Column(String, unique=True, index=True, default=lambda: str(uuid.uuid4()))
     owner = relationship("User", back_populates="notes")
+
+
+from sqlalchemy import Column, Integer, String, DateTime
+from datetime import datetime
+from .database import Base
+
+class ApiKey(Base):
+    __tablename__ = "api_keys"
+
+    id = Column(Integer, primary_key=True, index=True)
+    key_hash = Column(String, unique=True, nullable=False)
+    owner = Column(String, default="felix")
+    created_at = Column(DateTime, default=datetime.utcnow)
