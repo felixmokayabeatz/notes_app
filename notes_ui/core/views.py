@@ -39,8 +39,9 @@ def create_note(request):
     return render(request, "create_note.html")
 
 def register_view(request):
+    error = None
     if request.method == "POST":
-        email = request.POST["email"]  # make sure your form has 'name="email"'
+        email = request.POST["email"]
         password = request.POST["password"]
         res = requests.post(
             f"{API_BASE}/users/register",
@@ -48,4 +49,6 @@ def register_view(request):
         )
         if res.status_code == 200:
             return redirect("login")
-    return render(request, "register.html")
+        else:
+            error = res.json().get("detail", "Registration failed")
+    return render(request, "register.html", {"error": error})
