@@ -1,6 +1,7 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from django.core.management.utils import get_random_secret_key
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_DIR = Path(__file__).resolve().parent.parent.parent
@@ -8,9 +9,10 @@ ENV_DIR = Path(__file__).resolve().parent.parent.parent
 env_path = os.path.join(ENV_DIR, "app", ".env")
 load_dotenv(dotenv_path=env_path)
 
-SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") or get_random_secret_key()
+
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS_PRODUCTION", "localhost").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -50,9 +52,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'notes_ui.wsgi.application'
-
-
-
 
 DATABASES = {
     "default": {
