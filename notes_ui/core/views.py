@@ -87,13 +87,15 @@ def edit_note(request, note_id):
     if request.method == "POST":
         title = request.POST["title"]
         content = request.POST["content"]
+        shared = "shared" in request.POST  # checkbox → bool
 
         requests.put(
             f"{API_BASE}/notes/{note_id}",
-            json={"title": title, "content": content},
+            json={"title": title, "content": content, "shared": shared},
             headers=headers,
         )
         return redirect("notes_list")
+
 
     # Pre-fill the form with existing data
     res = requests.get(f"{API_BASE}/notes/{note_id}", headers=headers)
@@ -109,10 +111,30 @@ def delete_note(request, note_id):
     requests.delete(f"{API_BASE}/notes/{note_id}", headers=headers)
     return redirect("notes_list")
 
+# views.py
 
 def share_note(request, note_id):
-    """
-    Redirect to the public FastAPI endpoint that shows the note
-    (without requiring login).
-    """
-    return redirect(f"{API_BASE}/notes/{note_id}/view")
+    token = request.session.get("token")
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+
+    # Fetch the note to get share_id
+    res = requests.get(f"{API_BASE}/notes/{note_id}", headers=headers)
+    if res.status_code != 200:
+        return redirect("notes_list")
+
+    note = res.json()
+    if not note.get("shared") or not note.get("share_id"):
+        # force share first if not already shared
+        return redirect("edit_note", note_id=note_id)
+
+    # Instead of redirecting to FastAPI, fetch the shared note content
+    shared_res = requests.get(f"{API_BASE}/notes/shared/{note['share_id']}")
+    if shared_res.status_code != 200:
+        return redirect("notes_list")
+
+    shared_note = shared_res.json()
+
+    # Render in template
+    return render(request, "shared_note.html", {"note": shared_note})
+
+

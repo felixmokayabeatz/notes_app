@@ -30,7 +30,7 @@ class NoteOut(NoteBase):
     id: int
     owner_id: int
     shared: bool
-    share_id: str
+    share_id: Optional[str] = None
 
     class Config:
         from_attributes = True

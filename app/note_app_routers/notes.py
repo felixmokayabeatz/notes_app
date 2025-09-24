@@ -35,3 +35,13 @@ def get_shared_note(share_id: str, db: Session = Depends(database.get_db)):
     return note
 
 
+@router.get("/{note_id}", response_model=schemas.NoteOut)
+def get_note(
+    note_id: int,
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    note = crud.get_note_by_id(db, note_id, current_user.id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found or not yours")
+    return note

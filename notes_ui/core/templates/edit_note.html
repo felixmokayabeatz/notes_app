@@ -5,18 +5,19 @@
 </head>
 <body>
     <h1>Edit Note: {{ note.title }}</h1>
-    <form action="/notes/{{ note.id }}" method="post">
-        <input type="hidden" name="_method" value="put">
-        <label>Title:</label><br>
-        <input type="text" name="title" value="{{ note.title }}"><br><br>
+   <form action="{% url 'edit_note' note.id %}" method="post">
+    {% csrf_token %}
+    <label>Title:</label><br>
+    <input type="text" name="title" value="{{ note.title }}"><br><br>
 
-        <label>Content:</label><br>
-        <textarea name="content">{{ note.content }}</textarea><br><br>
+    <label>Content:</label><br>
+    <textarea name="content">{{ note.content }}</textarea><br><br>
 
-        <label>Shared:</label>
-        <input type="checkbox" name="shared" {% if note.shared %}checked{% endif %}><br><br>
+    <label>Shared:</label>
+    <input type="checkbox" name="shared" {% if note.shared %}checked{% endif %}><br><br>
 
-        <button type="submit">Save</button>
-    </form>
+    <button type="submit">Save</button>
+</form>
+
 </body>
 </html>
