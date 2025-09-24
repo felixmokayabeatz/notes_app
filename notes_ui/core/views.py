@@ -129,7 +129,7 @@ def share_note(request, note_id):
 def view_shared_note(request, share_id):
     res = requests.get(f"{API_BASE}/notes/shared/{share_id}")
     if res.status_code != 200:
-        return render(request, "shared_note.html", {"note": None, "error": "Note not found"})
+        return render(request, "shared_note.html", {"note": None, "error": "Note not found, or the Owner stoped sharing"})
 
     note = res.json()
     return render(request, "shared_note.html", {"note": note})
