@@ -46,12 +46,18 @@ uvicorn app.main:app --reload
 
 ### Visit Swagger docs: 👉 
 ```bash
-http://127.0.0.1:8000/docs#/
+http://127.0.0.1:8000/docs/
 ```
 
 ### 3️⃣ (Optional) Run Django Frontend
 
-### Open another terminal (keep FastAPI running in the first one) and start Django:
+### Open another terminal (keep FastAPI running in the first one)
+### Apply the migrations to use default tables like sessions
+
+```bash
+python manage.py migrate
+```
+### Start Django:
 ```bash
 python manage.py runserver 8001
 ```
