@@ -1,15 +1,16 @@
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_DIR = Path(__file__).resolve().parent.parent.parent
 
+env_path = os.path.join(ENV_DIR, "app", ".env")
+load_dotenv(dotenv_path=env_path)
 
-SECRET_KEY = 'django-insecure-q3*4yj#0(7z%2=ptbf_9v(@5b4iv(d)4@hba@v+yivp5a2*fs)'
-
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS_PRODUCTION", "localhost").split(",")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -50,13 +51,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'notes_ui.wsgi.application'
 
+USE_POSTGRES = os.getenv("USE_POSTGRES", "True").lower() == "true"
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if USE_POSTGRES:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DJANGO_DB_NAME"),
+            "USER": os.getenv("DJANGO_DB_USER"),
+            "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
+            "HOST": os.getenv("DJANGO_DB_HOST", "localhost"),
+            "PORT": os.getenv("DJANGO_DB_PORT_POSTGRESQL", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.getenv("DJANGO_DB_NAME"),
+            "USER": os.getenv("DJANGO_DB_USER"),
+            "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
+            "HOST": os.getenv("DJANGO_DB_HOST", "localhost"),
+            "PORT": os.getenv("DJANGO_DB_PORT_MYSQL", "3306"),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

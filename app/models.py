@@ -9,7 +9,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-
     notes = relationship("Note", back_populates="owner")
 
 class Note(Base):
@@ -21,5 +20,4 @@ class Note(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
     shared = Column(Boolean, default=False)
     share_id = Column(String, unique=True, index=True, default=lambda: str(uuid.uuid4()))
-
     owner = relationship("User", back_populates="notes")

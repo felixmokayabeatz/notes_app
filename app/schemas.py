@@ -12,7 +12,6 @@ class UserOut(BaseModel):
     class Config:
         orm_mode = True
 
-# Note schemas
 class NoteBase(BaseModel):
     title: str
     content: str
