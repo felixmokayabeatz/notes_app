@@ -22,9 +22,10 @@ class NoteCreate(NoteBase):
     content: str
 
 class NoteUpdate(BaseModel):
-    title: str
-    content: str
-    shared: Optional[bool] = False
+    title: Optional[str] = None
+    content: Optional[str] = None
+    shared: Optional[bool] = None
+
 
 class NoteOut(NoteBase):
     id: int

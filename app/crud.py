@@ -39,21 +39,26 @@ def update_note(db: Session, note_id: int, note_data: schemas.NoteUpdate, user_i
     if not note:
         return None
 
-    note.title = note_data.title
-    note.content = note_data.content
+    # Update only provided fields
+    if note_data.title is not None:
+        note.title = note_data.title
+    if note_data.content is not None:
+        note.content = note_data.content
 
     # Handle sharing logic
-    if note_data.shared:
-        note.shared = True
-        if not note.share_id:  # generate share_id if not already present
-            note.share_id = str(uuid.uuid4())
-    else:
-        note.shared = False
-        note.share_id = None  # remove share_id if unsharing
+    if note_data.shared is not None:
+        if note_data.shared:
+            note.shared = True
+            if not note.share_id:  # generate share_id if not already present
+                note.share_id = str(uuid.uuid4())
+        else:
+            note.shared = False
+            note.share_id = None  # remove share_id if unsharing
 
     db.commit()
     db.refresh(note)
     return note
+
 
 
 def get_note_by_share_id(db: Session, share_id: str):
