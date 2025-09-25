@@ -28,14 +28,17 @@ If you prefer, you can interact **directly with the API** through Swagger UI wit
 ---
 
 ## 📦 Installation & Setup
-
+---
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/felixmokayabeatz/notes_app.git
 cd notes_app
 ```
 
+---
+
 ## 2️⃣ Create and Acticvate the virtual environment
+
 #### On windows example
 
 ```bash
@@ -46,6 +49,7 @@ notes_app_v_env\Scripts\activate
 ```
 
 #### On Linux/macOS
+
 ```bash
 # Create
 python3 -m venv notes_app_v_env
@@ -54,26 +58,36 @@ python3 -m venv notes_app_v_env
 source notes_app_v_env/bin/activate
 ```
 
+---
+
 ## 3️⃣ Install the Depedencies/Packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
+---
+
 ## 4️⃣ Create and connect the datababse (PostgreSQL)
 
 First, make sure you have downloaded PostgreSQL from [the official website](https://www.postgresql.org/download/).
 
+---
+
 ### ⚠️🚨 DANGER !!!
 
-Never commit your **.env** file [.env](app/.env).  
-Always add it to **.gitignore** [.gitignore](.gitignore).
+Never commit your **.env** file [.env](app/.env) 
+Always add it to **.gitignore** [.gitignore](.gitignore)
 
 > **Note:** The files are linked here *intentionally for demonstration*.  
   In a real project, your `.env` file should **NEVER** be tracked by Git.
 
+---
 
-## Database Setup  
+## Database Setup
+
+--
+
 ### a) Using the terminal
 
 ```bash
