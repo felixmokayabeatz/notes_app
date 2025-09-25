@@ -63,3 +63,4 @@ async def custom_redoc(api_key: str = Depends(get_api_key)):
 @app.get("/openapi.json", include_in_schema=False)
 async def openapi_json(api_key: str = Depends(get_api_key)):
     return app.openapi()
+
