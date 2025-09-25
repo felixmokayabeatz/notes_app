@@ -66,8 +66,8 @@ First, make sure you have downloaded PostgreSQL from [the official website](http
 
 ### ⚠️🚨 DANGER !!!
 
-Never commit your **.env** file (`/app/.env`).  
-Always add it to **.gitignore** (`/.gitignore`).
+Never commit your **.env** file [app/.env](app/.env).  
+Always add it to **.gitignore** [./.gitignore](.gitignore).
 
 
 ## Database Setup  
