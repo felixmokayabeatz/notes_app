@@ -90,11 +90,29 @@ GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db_django TO felix_test;
 
 Download PgAdmin from [the official website](https://www.pgadmin.org/download/) and use it to create dbs and users just like above but with a GUI
 
+## 5️⃣ Apply migration for FastAPI and Django
+### FastAPI - You can skip these commands unless you have added new fields on the schema/db
+```bash
+# FastAPI - Generate migartions folder, and other files
+alembic init migrations
 
+# Add this to alembic.in
+sqlalchemy.url = postgresql://felix_test:1234@localhost:5432/felix_notes_app_db
 
+#Generate Migrations
+alembic revision --autogenerate -m "create notes table"
 
+# Apply Migrations
+alembic upgrade head
+```
 
-## 2️⃣ Run FastAPI Backend
+### Django
+```bash
+python manage.py makemigrations # Not very neccessary bcoz migrations files already exist in source code
+python manage.py migrate
+```
+
+## 6️⃣ Run FastAPI Backend
 
 ## Open a terminal and start the backend FastAPI with the following command:
 ```bash
@@ -108,14 +126,11 @@ uvicorn app.main:app --reload
 http://127.0.0.1:8000/docs/
 ```
 
-### 3️⃣ (Optional) Run Django Frontend
+### 7️⃣ (Optional) Run Django Frontend
 
 ### Open another terminal (keep FastAPI running in the first one)
 ### Apply the migrations to use default tables like sessions
 
-```bash
-python manage.py migrate
-```
 ### Start Django:
 ```bash
 python manage.py runserver 8001
@@ -129,3 +144,11 @@ Visit login page👇:
 http://127.0.0.1:8001/login/
 ```
 ### 👉 Important: Always run Django and FastAPI in separate terminals at the same time on diffrent ports.
+
+
+## Screnshots
+
+### Swagger UI
+![Swagger UI](screenshots/SwaggerUI(1).png)
+![Swagger UI](screenshots/SwaggerUI(2).png)
+![Swagger UI](screenshots/SwaggerUI(3).png)
