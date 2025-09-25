@@ -13,8 +13,6 @@ urlpatterns = [
     path("notes/shared/<str:share_id>/", view_shared_note, name="view_shared_note"),
     path("api-key/", api_key_page, name="api_key_page"),
     path("api-key/generate/", generate_api_key, name="generate_api_key"),
-
-
     path("forgot-password/", forgot_password_page, name="forgot_password"),
     path("reset-password/", reset_password_page, name="reset_password"),
 
