@@ -4,6 +4,12 @@ from django.urls import reverse
 
 API_BASE = "http://127.0.0.1:8000"
 
+
+def landing_page(request):
+    """Modern landing page with animations"""
+    return render(request, 'landing.html')
+
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]

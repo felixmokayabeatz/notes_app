@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from fastapi import FastAPI, Depends, HTTPException, Security, Body
+from fastapi import FastAPI, Depends, HTTPException, Security
 from fastapi.security.api_key import APIKeyHeader
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from starlette.status import HTTP_403_FORBIDDEN

@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import register_view, login_view, notes_list, create_note, edit_note, share_note, view_shared_note
+from .views import register_view, login_view, notes_list, create_note, edit_note, share_note, view_shared_note, landing_page
 from .generate_api_key import generate_api_key, api_key_page
 
 urlpatterns = [
+    path("", landing_page, name="landing_page"),
     path("register/", register_view, name="register"),
     path("login/", login_view, name="login"),
     path("notes/", notes_list, name="notes_list"),
