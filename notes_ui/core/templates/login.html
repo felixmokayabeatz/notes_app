@@ -129,7 +129,6 @@
             text-decoration: underline;
         }
 
-        /* Animations */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -141,7 +140,6 @@
             }
         }
 
-        /* Responsive Design */
         @media (max-width: 480px) {
             .container {
                 padding: 1.5rem;
@@ -154,7 +152,6 @@
     </style>
 </head>
 <body>
-    <!-- Particles Background -->
     <div id="particles-js"></div>
 
     <div class="container">
@@ -175,16 +172,15 @@
             
             <button type="submit">Login</button>
         </form>
-        <div class="forgot-password">
-            <a href="/forgot-password">Forgot your password?</a>
-        </div>
-                <div class="back-link">
+        <div class="back-link">
+            <a href="/forgot-password">Forgot your password?</a><br>
+            <a href="/register">Don't have an Account? Register here.</a><br>
             <a href="/">← Back to Homepage</a>
         </div>
+
     </div>
 
     <script>
-        // Particles.js configuration
         particlesJS('particles-js', {
             particles: {
                 number: {
