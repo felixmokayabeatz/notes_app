@@ -6,27 +6,44 @@
 <body>
     <h1>Generate API Key</h1>
     
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Generate New API Key</button>
-    </form>
-
-    {% if api_key %}
-        <p><strong>Your API Key:</strong></p>
-        <input type="text" value="{{ api_key }}" id="apiKey" readonly>
-        <button onclick="copyKey()">Copy</button>
-    {% endif %}
-
-    {% if error %}
-        <p style="color:red;">{{ error }}</p>
-    {% endif %}
+    <button id="generateBtn">Generate New API Key</button>
+    <div id="result"></div>
 
     <script>
-    function copyKey() {
-        var copyText = document.getElementById("apiKey");
-        copyText.select();
-        document.execCommand("copy");
-        alert("Copied to clipboard!");
+    document.getElementById("generateBtn").addEventListener("click", async function() {
+        try {
+            // Call FastAPI directly (no JWT needed for your current setup)
+            const response = await fetch("http://127.0.0.1:8000/generate-api-key", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await response.json();
+            
+            if (response.ok) {
+                document.getElementById("result").innerHTML = `
+                    <p><strong>Your API Key:</strong></p>
+                    <input type="text" value="${data.api_key}" id="apiKey" readonly style="width: 500px;">
+                    <button onclick="copyToClipboard('${data.api_key}')">Copy</button>
+                    <p><small>Use this key to access protected endpoints like Swagger docs</small></p>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = 
+                    `<p style="color:red;">Error: ${data.detail || "Unknown error"}</p>`;
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            document.getElementById("result").innerHTML = 
+                `<p style="color:red;">Error: ${err.message}</p>`;
+        }
+    });
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("API key copied to clipboard!");
+        });
     }
     </script>
 </body>
