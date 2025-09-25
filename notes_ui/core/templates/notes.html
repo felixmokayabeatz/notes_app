@@ -305,14 +305,21 @@
             <div class="note-card">
                 <h3 class="note-title">{{ note.title }}</h3>
                 <div class="note-content">{{ note.content }}</div>
+
                 <div class="note-actions">
                     <a href="{% url 'edit_note' note.id %}" class="note-action edit-action">✏️ Edit</a>
                     <a href="{% url 'share_note' note.id %}" class="note-action share-action">🔗 Share</a>
+                    <div class="note-status">
+                        {% if note.shared %}
+                            <span class="shared note-action">✅ Shared</span>
+                        {% else %}
+                            <span class="not-shared note-action">❌ Not Shared</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-        {% else %}
         <section class="empty-state">
             <div class="empty-icon">📝</div>
             <h3>No notes yet</h3>
