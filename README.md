@@ -91,7 +91,7 @@ GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db_django TO felix_test;
 Download PgAdmin from [the official website](https://www.pgadmin.org/download/) and use it to create dbs and users just like above but with a GUI
 
 ## 5️⃣ Apply migration for FastAPI and Django
-### FastAPI - You can skip these commands unless you have added new fields on the schema/db
+### FastAPI - You can skip these commands(For FastAPI only) unless you have added new fields on the schema/db
 ```bash
 # FastAPI - Generate migartions folder, and other files
 alembic init migrations
