@@ -148,7 +148,19 @@ http://127.0.0.1:8001/login/
 
 ## Screnshots
 
-### Swagger UI
+### Swagger endpoints UI
 ![Swagger UI](screenshots/SwaggerUI(1).png)
 ![Swagger UI](screenshots/SwaggerUI(2).png)
-![Swagger UI](screenshots/SwaggerUI(3).png)
+
+### Actual front end Test
+![Front-End UI](screenshots/AppUI(1).png)
+![Front-End UI](screenshots/AppUI(2).png)
+
+### Database and tables
+![Database](screenshots/db_tables.png)
+![Database](screenshots/tablespgadmin(1).png)
+![Database](screenshots/tablespgadmin(2).png)
+
+## Demo Video
+
+[▶️ Watch the demo](demo_video/NotesVideo.mp4)
