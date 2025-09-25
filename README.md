@@ -35,23 +35,59 @@ git clone https://github.com/felixmokayabeatz/notes_app.git
 cd notes_app
 ```
 
-## 2️⃣ Create and Acticvate teh virtual environment
+## 2️⃣ Create and Acticvate the virtual environment
 #### On windows example
 
 ```bash
 # Create
-python -m venv venv
+python -m venv notes_app_v_env
 # Activate
-venv\Scripts\activate
+notes_app_v_env\Scripts\activate
 ```
+
 #### On Linux/macOS
 ```bash
 # Create
-python3 -m venv venv
+python3 -m venv notes_app_v_env
 
 # Activate
-source venv/bin/activate
+source notes_app_v_env/bin/activate
 ```
+
+## 3️⃣ Install the Depedencies/Packages
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4️⃣ Create and connect the datababse (PostgreSQL)
+### Using the terminal
+## Database Setup  
+
+First, make sure you have downloaded PostgreSQL from [the official website](https://www.postgresql.org/download/).  
+
+```bash
+
+# This is the default Super user, if you set another use that.
+psql -U postgres
+
+# Create User and update your .env accordingly
+CREATE USER felix_test WITH PASSWORD '1234';
+
+# Create Databases
+CREATE DATABASE felix_notes_app_db OWNER felix_test; # For FastAPI
+CREATE DATABASE felix_notes_app_db_django OWNER felix_test; # For Django
+
+# Give Privileges
+GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db TO felix_test;
+GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db_django TO felix_test;
+
+#Exit from postgres terminal
+\q
+```
+
+
+
 
 ## 2️⃣ Run FastAPI Backend
 
