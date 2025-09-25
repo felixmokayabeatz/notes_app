@@ -86,7 +86,7 @@ Always add it to **.gitignore** [.gitignore](.gitignore)
 
 ## Database Setup
 
---
+---
 
 ### a) Using the terminal
 
@@ -110,9 +110,13 @@ GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db_django TO felix_test;
 \q
 ```
 
+---
+
 ### b) Using PgAdmin (I reccommend this for people with less experince with postgres on terminal)
 
 Download PgAdmin from [the official website](https://www.pgadmin.org/download/) and use it to create dbs and users just like above but with a GUI
+
+---
 
 ## 5️⃣ Apply migration for FastAPI and Django
 ### FastAPI - You can skip these commands (For FastAPI only) unless you have added new fields on the schema/db
@@ -130,11 +134,15 @@ alembic revision --autogenerate -m "create notes table"
 alembic upgrade head
 ```
 
+---
+
 ### Django
+
 ```bash
 python manage.py makemigrations # Not very neccessary bcoz migrations files already exist in source code
 python manage.py migrate
 ```
+---
 
 ## 6️⃣ Run FastAPI Backend
 
@@ -149,6 +157,8 @@ uvicorn app.main:app --reload
 ```bash
 http://127.0.0.1:8000/docs/
 ```
+
+---
 
 ### 7️⃣ (Optional) Run Django Frontend
 
@@ -169,6 +179,7 @@ http://127.0.0.1:8001/login/
 ```
 ### 👉 Important: Always run Django and FastAPI in separate terminals at the same time on diffrent ports.
 
+---
 
 ## Screnshots
 
@@ -176,14 +187,20 @@ http://127.0.0.1:8001/login/
 ![Swagger UI](screenshots/SwaggerUI(1).png)
 ![Swagger UI](screenshots/SwaggerUI(2).png)
 
+---
+
 ### Actual front end Test
 ![Front-End UI](screenshots/AppUI(1).png)
 ![Front-End UI](screenshots/AppUI(2).png)
+
+---
 
 ### Database and tables
 ![Database](screenshots/db_tables.png)
 ![Database](screenshots/tablespgadmin(1).png)
 ![Database](screenshots/tablespgadmin(2).png)
+
+---
 
 ## Demo Video
 
