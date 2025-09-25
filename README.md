@@ -61,10 +61,12 @@ pip install -r requirements.txt
 ```
 
 ## 4️⃣ Create and connect the datababse (PostgreSQL)
+
+First, make sure you have downloaded PostgreSQL from [the official website](https://www.postgresql.org/download/).  
+
 ### Using the terminal
 ## Database Setup  
 
-First, make sure you have downloaded PostgreSQL from [the official website](https://www.postgresql.org/download/).  
 
 ```bash
 
