@@ -1,50 +1,573 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My API Key</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key - NoteFlow</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            width: 90%;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeUp 1s ease-out;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #a8e6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .api-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+            border-left: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .api-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .api-info ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .api-info li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .api-info li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 152, 0, 0.4);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .generate-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .generate-btn.loading:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .result-container.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .api-key-label {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .api-key-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .api-key-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            color: #333;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+
+        .usage-info {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.2);
+            border-left: 4px solid #ff6b6b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .primary-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .api-key-box {
+                flex-direction: column;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Generate API Key</h1>
-    
-    <button id="generateBtn">Generate New API Key</button>
-    <div id="result"></div>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <div class="container">
+        <div class="logo">NoteFlow</div>
+        <h1 class="page-title">API Key Generator</h1>
+        
+        <p class="description">
+            Generate an API key to access NoteFlow's REST API endpoints. 
+            Use this key to integrate with external applications and services.
+        </p>
+        
+        <div class="api-info">
+            <h3>🔑 API Key Information</h3>
+            <ul>
+                <li>Your API key provides access to protected endpoints</li>
+                <li>Use it in the <code>X-API-Key</code> header for authentication</li>
+                <li>Keep your API key secure and never share it publicly</li>
+                <li>Each key is unique and can be used across all API endpoints</li>
+            </ul>
+        </div>
+        
+        <button id="generateBtn" class="generate-btn">
+            <span>⚡</span> Generate New API Key
+        </button>
+        
+        <div id="errorMessage" class="error-message"></div>
+        
+        <div id="result" class="result-container">
+            <span class="api-key-label">Your API Key:</span>
+            <div class="api-key-box">
+                <input type="text" id="apiKey" class="api-key-input" readonly>
+                <button id="copyBtn" class="copy-btn">
+                    <span>📋</span> Copy
+                </button>
+            </div>
+            <div class="usage-info">
+                <p>💡 <strong>Usage:</strong> Include this key in the <code>X-API-Key</code> header when making API requests.</p>
+                <p>🔒 <strong>Security:</strong> Store this key securely. It provides full access to your account via the API.</p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="http://127.0.0.1:8000/docs" class="btn primary-btn" target="_blank">
+                <span>📚</span> View API Documentation
+            </a>
+
+            <a href="/notes" class="btn secondary-btn">
+                <span>📝</span> Back to Notes
+            </a>
+        </div>
+    </div>
 
     <script>
-    document.getElementById("generateBtn").addEventListener("click", async function() {
-        try {
-            // Call FastAPI directly (no JWT needed for your current setup)
-            const response = await fetch("http://127.0.0.1:8000/generate-api-key", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 50,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#ffffff'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
                 }
-            });
-
-            const data = await response.json();
-            
-            if (response.ok) {
-                document.getElementById("result").innerHTML = `
-                    <p><strong>Your API Key:</strong></p>
-                    <input type="text" value="${data.api_key}" id="apiKey" readonly style="width: 500px;">
-                    <button onclick="copyToClipboard('${data.api_key}')">Copy</button>
-                    <p><small>Use this key to access protected endpoints like Swagger docs</small></p>
-                `;
-            } else {
-                document.getElementById("result").innerHTML = 
-                    `<p style="color:red;">Error: ${data.detail || "Unknown error"}</p>`;
-            }
-        } catch (err) {
-            console.error("Error:", err);
-            document.getElementById("result").innerHTML = 
-                `<p style="color:red;">Error: ${err.message}</p>`;
-        }
-    });
-
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("API key copied to clipboard!");
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 200,
+                        line_linked: {
+                            opacity: 0.2
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
         });
-    }
+
+        document.getElementById("generateBtn").addEventListener("click", async function() {
+            const generateBtn = this;
+            const resultDiv = document.getElementById("result");
+            const errorDiv = document.getElementById("errorMessage");
+            
+            errorDiv.classList.remove("visible");
+            resultDiv.classList.remove("visible");
+            
+            generateBtn.disabled = true;
+            generateBtn.classList.add("loading");
+            
+            try {
+                const response = await fetch("http://127.0.0.1:8000/generate-api-key", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById("apiKey").value = data.api_key;
+                    resultDiv.classList.add("visible");
+                    
+                    const copyBtn = document.getElementById("copyBtn");
+                    copyBtn.innerHTML = '<span>📋</span> Copy';
+                    copyBtn.classList.remove("copied");
+                } else {
+                    errorDiv.textContent = `Error: ${data.detail || "Unknown error"}`;
+                    errorDiv.classList.add("visible");
+                }
+            } catch (err) {
+                console.error("Error:", err);
+                errorDiv.textContent = `Error: ${err.message}`;
+                errorDiv.classList.add("visible");
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.classList.remove("loading");
+            }
+        });
+
+        document.getElementById("copyBtn").addEventListener("click", function() {
+            const apiKeyInput = document.getElementById("apiKey");
+            const copyBtn = this;
+            
+            navigator.clipboard.writeText(apiKeyInput.value).then(() => {
+                copyBtn.innerHTML = '<span>✅</span> Copied!';
+                copyBtn.classList.add("copied");
+                
+                copyBtn.style.animation = 'pulse 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<span>📋</span> Copy';
+                    copyBtn.classList.remove("copied");
+                    copyBtn.style.animation = '';
+                }, 2000);
+            }).catch(err => {
+                apiKeyInput.select();
+                document.execCommand("copy");
+                alert("API key copied to clipboard!");
+            });
+        });
+
+        document.getElementById('apiKey').addEventListener('click', function() {
+            this.select();
+        });
     </script>
 </body>
 </html>
