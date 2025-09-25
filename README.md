@@ -63,10 +63,8 @@ pip install -r requirements.txt
 ## 4️⃣ Create and connect the datababse (PostgreSQL)
 
 First, make sure you have downloaded PostgreSQL from [the official website](https://www.postgresql.org/download/).  
-
-### Using the terminal
 ## Database Setup  
-
+### a) Using the terminal
 
 ```bash
 
@@ -87,6 +85,11 @@ GRANT ALL PRIVILEGES ON DATABASE felix_notes_app_db_django TO felix_test;
 #Exit from postgres terminal
 \q
 ```
+
+### b) Using PgAdmin (I reccommend this for people with less experince with postgres on terminal)
+
+Download PgAdmin from [the official website](https://www.pgadmin.org/download/) and use it to create dbs and users just like above but with a GUI
+
 
 
 
