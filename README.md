@@ -163,4 +163,4 @@ http://127.0.0.1:8001/login/
 
 ## Demo Video
 
-[![Watch the demo](demo_video/demo_preview.gif)](demo_video/NotesVideo.mp4)
+[▶️ Watch the demo](https://drive.google.com/uc?id=1JnpweAYKAhdrxTlIZothezO-PejCnUr2)
