@@ -147,6 +147,5 @@ def forgot_password_page(request):
     return render(request, "forgot_password.html")
 
 def reset_password_page(request):
-    # token will be passed in the query params, e.g. /reset-password/?token=abc123
     token = request.GET.get("token")
     return render(request, "reset_password.html", {"token": token})
