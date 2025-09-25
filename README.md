@@ -35,9 +35,27 @@ git clone https://github.com/felixmokayabeatz/notes_app.git
 cd notes_app
 ```
 
+## 2️⃣ Create and Acticvate teh virtual environment
+#### On windows example
+
+```bash
+# Create
+python -m venv venv
+# Activate
+venv\Scripts\activate
+```
+#### On Linux/macOS
+```bash
+# Create
+python3 -m venv venv
+
+# Activate
+source venv/bin/activate
+```
+
 ## 2️⃣ Run FastAPI Backend
 
-## Open a terminal and start the backend:
+## Open a terminal and start the backend FastAPI with the following command:
 ```bash
 uvicorn app.main:app --reload
 ```
