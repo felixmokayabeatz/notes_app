@@ -1,5 +1,11 @@
 # 📝 Notes App (FastAPI + PostgreSQL + [Optional Django UI])
 
+---
+
+[PostMan Documentation](https://documenter.getpostman.com/view/48823076/2sB3QDvD8B)
+
+---
+
 This is a **note-taking application** where users can create, store, and share notes securely.  
 The backend is powered by **FastAPI** with **PostgreSQL** as the database.  
 
@@ -178,6 +184,10 @@ Visit login page👇:
 http://127.0.0.1:8001/login/
 ```
 ### 👉 Important: Always run Django and FastAPI in separate terminals at the same time on diffrent ports.
+
+---
+
+[PostMan Documentation](https://documenter.getpostman.com/view/48823076/2sB3QDvD8B)
 
 ---
 
