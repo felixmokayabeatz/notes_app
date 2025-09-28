@@ -1,4 +1,4 @@
-# 📝 Notes App (FastAPI + PostgreSQL + [Optional Django UI])
+# 📝 Notes App (FastAPI + PostgreSQL + [Optional Django UI for Endpoints])
 
 ---
 
