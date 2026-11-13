@@ -12,22 +12,6 @@ You can use the app through the Django UI, or talk to the API directly.
 
 ---
 
-## Table of Contents
-
-1. [Features](#features)
-2. [Tech Stack](#tech-stack)
-3. [Prerequisites](#prerequisites)
-4. [Installation](#installation)
-5. [Environment Variables](#environment-variables)
-6. [Database Setup](#database-setup)
-7. [Running the App](#running-the-app)
-8. [API Overview](#api-overview)
-9. [Django UI Pages](#django-ui-pages)
-10. [Screenshots](#screenshots)
-11. [Troubleshooting](#troubleshooting)
-
----
-
 ## Features
 
 - JWT authentication (register, login, current user)
