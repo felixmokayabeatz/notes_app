@@ -80,13 +80,32 @@ First, make sure you have downloaded PostgreSQL from [the official website](http
 
 ---
 
-### ⚠️🚨 DANGER !!!
+### 4️⃣ Set up environment variables
 
-Never commit your **.env** file [.env](app/.env) 
-Always add it to **.gitignore** [.gitignore](.gitignore)
+The application loads environment variables from a `.env` file in the project
+root. Create your local `.env` file from the included
+[`.env.example`](.env.example):
 
-> **Note:** The files are linked here *intentionally for demonstration*.  
-  In a real project, your `.env` file should **NEVER** be tracked by Git.
+#### Linux/macOS
+
+```bash
+cp .env.example .env
+```
+
+#### Windows PowerShell
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Open `.env` and update `DB_NAME`, `DJANGO_DB_NAME`, `DB_USER`, and
+`DB_PASSWORD` with the PostgreSQL database and user details you created below.
+Update `DB_HOST`, `DB_PORT_POSTGRESQL`, and `ALLOWED_HOSTS` if your setup uses
+different values.
+
+Never commit your **.env** file. It is already listed in
+[`.gitignore`](.gitignore). Use [`.env.example`](.env.example) as the safe
+template to share with other developers.
 
 ---
 
